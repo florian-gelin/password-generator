@@ -1,3 +1,4 @@
+from hashlib import sha256
 def password_check(passwd):
     SpecialSym = ['$', '@', '#', '%']
     val = True
@@ -32,7 +33,8 @@ def main():
     passwd = input("Veuillez saisir un mot de passe: ")
     if password_check(passwd):
         print("Votre mot de passe est validé !")
-        
+        mdp_crypt = sha256(passwd.encode('utf-8')).hexdigest()
+        print(mdp_crypt)
     else:
         print("Erreur de mot de passe")
         return main()
