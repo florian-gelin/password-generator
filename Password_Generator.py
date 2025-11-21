@@ -1,4 +1,5 @@
 from hashlib import sha256
+import json
 def password_check(passwd):
     SpecialSym = ['$', '@', '#', '%']
     val = True
@@ -34,7 +35,8 @@ def main():
     if password_check(passwd):
         print("Votre mot de passe est validé !")
         mdp_crypt = sha256(passwd.encode('utf-8')).hexdigest()
-        print(mdp_crypt)
+        with open('donnees_utilisateur.json', 'w', encoding='utf-8') as fichier:
+            json.dump(mdp_crypt, fichier, indent=4, ensure_ascii=False)
     else:
         print("Erreur de mot de passe")
         return main()
