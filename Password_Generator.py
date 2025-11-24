@@ -35,10 +35,22 @@ def main():
     if password_check(passwd):
         print("Votre mot de passe est validé !")
         mdp_crypt = sha256(passwd.encode('utf-8')).hexdigest()
+        try:
+            with open('donnees_utilisateur.json', 'r') as fichier:
+                donnees = json.load(fichier)
+        except FileNotFoundError:
+            donnees = []
+        liste = [mdp_crypt]
+        donnees.append(liste)
         with open('donnees_utilisateur.json', 'w', encoding='utf-8') as fichier:
-            json.dump(mdp_crypt, fichier, indent=4, ensure_ascii=False)
+            json.dump(donnees, fichier, indent=4)
+        with open('donnees_utilisateur.json', 'r', encoding='utf-8') as fichier:
+            lecture = json.load(fichier)
+        for element in lecture:
+            print(element)
     else:
         print("Erreur de mot de passe")
         return main()
 
 main()
+
